@@ -4,6 +4,7 @@ exports.up = function(knex) {
       tbl.increments()
       tbl.string('name').notNullable()
       tbl.string('price').notNullable()
+      tbl.string('img').notNullable()
   })
 };
 

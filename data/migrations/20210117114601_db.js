@@ -6,8 +6,14 @@ exports.up = function(knex) {
       tbl.string('price').notNullable()
       tbl.string('img').notNullable()
   })
+  .createTable('users', tbl => {
+    tbl.increments()
+    tbl.string('email').notNullable().unique()
+    tbl.string('password').notNullable()
+  })
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('whiskey');
-};
+  return knex.schema.dropTableIfExists('users')
+  .dropTableIfExists('whiskey')
+}

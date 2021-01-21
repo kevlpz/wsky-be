@@ -5,7 +5,7 @@ const db = require('../../data/knexConfig');
 module.exports = {
     get,
     getById,
-    getByUsername,
+    getByemail,
     add
 }
 
@@ -19,9 +19,9 @@ function getById(id) {
     .first();
 }
 
-function getByUsername(username) {
+function getByemail(email) {
     return db('users')
-    .where({username: username})
+    .where({email: email})
     .first();
 }
 

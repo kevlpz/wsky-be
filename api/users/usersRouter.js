@@ -1,7 +1,7 @@
 const express = require('express')
 const bcrypt = require('bcryptjs')
-
 const Users = require('./usersModel')
+const passport = require('passport')
 // const passport = require('passport')
 
 const router = express.Router()
@@ -18,13 +18,27 @@ router.post('/register', async (req, res) => {
         })
 })
 
+// Login
+router.post('login', (req, res) => {
+    passport.authenticate('local', (err, user, done) => {
+        if(err) throw err
+        if(!user) res.status(404).json({error: 'User not found'})
+        else {
+            req.logIn(user, err => {
+                if(err) throw err
+                res.status(201).json({message: 'Logged in successfully'})
+            })
+        }
+    })
+})
+
 // Get user
 router.get('/:id', (req, res) => {
     Users.getById(req.params.id)
         .then(user => res.status(200).json(user))
         .catch(err => {
             console.log(err)
-            res.status(404).json({error: "Could not find user"})
+            res.status(404).json({error: 'Could not find user'})
         })
 })
 

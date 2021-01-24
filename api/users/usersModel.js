@@ -16,17 +16,17 @@ function get() {
 function getById(id) {
     return db('users')
     .where({id: id})
-    .first();
+    .first()
 }
 
 function getByEmail(email) {
     return db('users')
     .where({email: email})
-    .first();
+    .first()
 }
 
 function add(user) {
     return db('users')
         .insert(user, 'id')
-        .then(([id]) => getById(id));
+        .then(([id]) => getById(id))
 }

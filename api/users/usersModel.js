@@ -21,8 +21,8 @@ function getById(id) {
 
 function getByEmail(email) {
     return db('users')
-    .where({email: email})
-    .first()
+        .where({email: email})
+        .first()
 }
 
 function add(user) {

@@ -5,20 +5,25 @@ const LocalStrategy = require('passport-local').Strategy
 module.exports = function(passport) {
     console.log('local strategy')
     passport.use(
-        new LocalStrategy({usernameField: 'email'}, (username, password, done) => {
-            Users.getByEmail(username)
+        new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
+            console.log('local strategy 2')
+            Users.getByEmail(email)
                 .then(user => {
-                    console.log('get')
-                    bcrypt.compare(password, user.password, (err, result) => {
-                        if (err) {
-                            return done(err)
-                        }
-                        if(result === true) {
-                            return done(null, user)
-                        } else {
-                            return done(null,false)
-                        }
-                    })
+                    console.log('user: ', user)
+                    if(!user) {
+                        return done(null, false)
+                    } else {
+                        bcrypt.compare(password, user.password, (err, result) => {
+                            if (err) {
+                                return done(err)
+                            }
+                            if(result === true) {
+                                return done(null, user)
+                            } else {
+                                return done(null,false)
+                            }
+                        })
+                    }
                 })
                 .catch(err => {
                     console.log('strat err: ', err)

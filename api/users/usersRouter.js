@@ -2,42 +2,51 @@ const express = require('express')
 const bcrypt = require('bcryptjs')
 const Users = require('./usersModel')
 const passport = require('passport')
-// const passport = require('passport')
 
 const router = express.Router()
+
+const authenticate = (req, res, next) => {
+    if (req.user) {
+        return next()
+    }
+    return res.status(401).json({ error: 'Not logged in' })
+}
 
 // Register
 router.post('/register', async (req, res) => {
     const { email, password } = req.body
     const hashedPassword = await bcrypt.hash(password, 10)
-    Users.add({email, password: hashedPassword})
-        .then(user => res.status(201).json({...user, password: undefined}))
+    Users.add({ email, password: hashedPassword })
+        .then(user => res.status(201).json({ ...user, password: undefined }))
         .catch(err => {
             console.log(err)
-            res.status(500).json({error: 'Could not create user'})
+            res.status(500).json({ error: 'Could not create user' })
         })
 })
 
+// Login
 router.get('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
-      if (err) { return next(err) }
-      if (!user) { return res.status(404).json({error: 'User not found'}) }
-      req.logIn(user, (err) => {
         if (err) { return next(err) }
-        return res.status(201).json(user)
-      })
+        if (!user) { return res.status(404).json({ error: 'User not found' }) }
+        req.logIn(user, (err) => {
+            if (err) { return next(err) }
+            console.log(req.user.email)
+            return res.status(201).json(user)
+        })
     })(req, res, next)
-  })
+})
 
 // Get by email
-router.get('/', (req, res) => {
-    Users.getByEmail(req.body.email)
-        .then(email => {
-            res.status(200).json(email)
+router.get('/', authenticate, (req, res) => {
+    console.log('req: ', req.user)
+    Users.getById(req.user)
+        .then(user => {
+            res.status(200).json(user)
         })
         .catch(err => {
             console.log('catch err: ', err)
-            res.status(500).json({error: 'Could not get users'})
+            res.status(500).json({ error: 'Could not get users' })
         })
 })
 
@@ -47,7 +56,7 @@ router.get('/:id', (req, res) => {
         .then(user => res.status(200).json(user))
         .catch(err => {
             console.log(err)
-            res.status(404).json({error: 'Could not find user'})
+            res.status(404).json({ error: 'Could not find user' })
         })
 })
 

@@ -24,9 +24,9 @@ server.use(session({
     resave: false,
     saveUninitialized: false // false for production
 }))
-require('./passportConfig')(passport)
 server.use(passport.initialize())
 server.use(passport.session())
+require('./passportConfig')(passport)
 server.use(helmet())
 server.use(express.json())
 server.use('/products', productsRouter)

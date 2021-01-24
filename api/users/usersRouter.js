@@ -18,13 +18,16 @@ router.post('/register', async (req, res) => {
         })
 })
 
-// Login
-// router.post('/login', passport.authenticate('local'), (req, res) => {
-//     console.log('login: ', res.user)
-//     res.status(200).json(res.user)
-// })
-
-router.post('/login', passport.authenticate('local'))
+router.get('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+      if (err) { return next(err) }
+      if (!user) { return res.status(404).json({error: 'User not found'}) }
+      req.logIn(user, (err) => {
+        if (err) { return next(err) }
+        return res.status(201).json(user)
+      })
+    })(req, res, next)
+  })
 
 // Get by email
 router.get('/', (req, res) => {

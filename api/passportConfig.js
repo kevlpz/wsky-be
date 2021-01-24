@@ -3,13 +3,10 @@ const bcrypt = require('bcryptjs')
 const LocalStrategy = require('passport-local').Strategy
 
 module.exports = function(passport) {
-    console.log('local strategy')
     passport.use(
         new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
-            console.log('local strategy 2')
             Users.getByEmail(email)
                 .then(user => {
-                    console.log('user: ', user)
                     if(!user) {
                         return done(null, false)
                     } else {
@@ -26,36 +23,20 @@ module.exports = function(passport) {
                     }
                 })
                 .catch(err => {
-                    console.log('strat err: ', err)
                     return done(err)
                 })
         })
     )
 
-    // passport.use(
-    //     new LocalStrategy({usernameField: 'email'}, async (username, password, done) => {
-    //         try{
-    //                 const user = await Users.getByEmail(username)
-    //                 console.log('get')
-    //                 const result = await bcrypt.compare(password, user.password)
-
-    //                 if(!result) done(null, false)
-    //                 return done(null, user)
-
-    //             }
-    //             catch (err) {
-    //                 console.log('strat err: ', err)
-    //                 return done(err)
-    //             }
-    //     })
-    // )
-
-    passport.serializeUser((user, cb) => {
-        cb(null, user.id)
+    passport.serializeUser((user, done) => {
+        done(null, user.id)
     })
-    passport.deserializeUser((id, cb) => {
+    passport.deserializeUser((id, done) => {
         Users.getById(id)
-            .then(user => cb(err, user))
-            .catch(err => console.log('Error deserializing user'))
+            .then(user => done(null, user.id))
+            .catch(err => {
+                console.log('Error deserializing user', err)
+                done(err)
+            })
     })
 }

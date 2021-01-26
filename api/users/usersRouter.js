@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
 })
 
 // Login
-router.get('/login', (req, res, next) => {
+router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) { return next(err) }
         if (!user) { return res.status(404).json({ error: 'User not found' }) }

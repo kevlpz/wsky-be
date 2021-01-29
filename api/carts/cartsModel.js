@@ -3,6 +3,7 @@ const db = require('../../data/knexConfig.js')
 module.exports = {
     get,
     add,
+    del,
     getByUserId,
 }
 
@@ -18,10 +19,17 @@ function add(item) {
         .then(() => get(item.cartID))
 }
 
+function del(id) {
+    return db('cartItems')
+        .where({id: id})
+        .del()
+        .then(res => console.log(res))
+}
+
 function getByUserId(id) {
     return db('carts')
         .leftJoin('cartItems', 'carts.id', 'cartItems.cartID')
         .join('whiskey', 'whiskey.id', 'productID')
-        .select('whiskey.id', 'quantity', 'name', 'price', 'img')
+        .select('whiskey.id as productID', 'quantity', 'name', 'price', 'img', 'cartItems.id as itemID')
         .where({userID: id})
 }

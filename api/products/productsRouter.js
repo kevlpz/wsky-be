@@ -4,7 +4,7 @@ const Products = require('./productsModel');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    Products.get(req.body.category)
+    Products.get()
         .then(items => {
             res.status(200).json(items)
         })

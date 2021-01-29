@@ -22,7 +22,6 @@ router.post('/', (req, res) => {
 
 // Get cart by user
 router.get('/', (req, res) => {
-    console.log('req.user: ', req.user)
     if(!req.user) {
         res.status(401).json({error: 'Must be logged in'})
     } else {

@@ -25,10 +25,42 @@ exports.up = function (knex) {
       tbl.string('email').notNullable().unique()
       tbl.string('password').notNullable()
     })
+    .createTable('carts', tbl => {
+      tbl.increments()
+      tbl
+        .integer('userID')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('users')
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE")
+    })
+    .createTable('cartItems', tbl => {
+      tbl.increments()
+      tbl
+        .integer('productID')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('whiskey')
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE")
+      tbl
+        .integer('cartID')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('carts')
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE")
+      tbl.integer('quantity').notNullable()
+    })
 };
 
 exports.down = function (knex) {
   return knex.schema
+    .dropTableIfExists('carts')
     .dropTableIfExists('categories')
     .dropTableIfExists('users')
     .dropTableIfExists('whiskey')

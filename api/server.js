@@ -8,6 +8,7 @@ const passport = require('passport')
 
 const productsRouter = require('./products/productsRouter')
 const usersRouter = require ('./users/usersRouter')
+const cartsRouter = require('./carts/cartsRouter')
 
 server.use(cors({
     origin: 'http://localhost:3000',
@@ -31,5 +32,6 @@ server.use(helmet())
 server.use(express.json())
 server.use('/products', productsRouter)
 server.use('/users', usersRouter)
+server.use('/carts', cartsRouter)
 
 module.exports = server

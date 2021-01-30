@@ -50,4 +50,22 @@ router.delete('/:id', (req, res) => {
     }
 })
 
+
+// Update item quantity
+router.put('/', (req, res) => {
+    const { id } = req.body
+    const { quantity } = req.body
+
+    if(!req.user) {
+        res.status(404).json({error: 'Must be logged in'})
+    } else {
+        Carts.update(id, quantity)
+            .then(item => res.status(201).json(item))
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({error: 'Internal server error'})
+            })
+    }
+})
+
 module.exports = router

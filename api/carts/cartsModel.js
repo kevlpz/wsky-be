@@ -1,8 +1,10 @@
+const { where } = require('../../data/knexConfig.js')
 const db = require('../../data/knexConfig.js')
 
 module.exports = {
     get,
     add,
+    update,
     del,
     getByUserId,
 }
@@ -19,11 +21,17 @@ function add(item) {
         .then(() => get(item.cartID))
 }
 
+function update(id, quantity) {
+    return db('cartItems')
+        .where({id: id})
+        .update({quantity: quantity})
+        .then(id => getItemById(id))
+}
+
 function del(id) {
     return db('cartItems')
         .where({id: id})
         .del()
-        .then(res => console.log(res))
 }
 
 function getByUserId(id) {
@@ -32,4 +40,10 @@ function getByUserId(id) {
         .join('whiskey', 'whiskey.id', 'productID')
         .select('whiskey.id as productID', 'quantity', 'name', 'price', 'img', 'cartItems.id as itemID')
         .where({userID: id})
+}
+
+function getItemById(id) {
+    return db('cartItems')
+        .where({id: id})
+        .first()
 }

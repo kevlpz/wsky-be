@@ -38,6 +38,7 @@ router.get('/', (req, res) => {
 
 // Remove from cart
 router.delete('/:id', (req, res) => {
+    console.log('req,params: ', req.params)
     if(!req.user) {
         res.status(404).json({error: 'Must be logged in'})
     } else {

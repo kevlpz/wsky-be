@@ -39,7 +39,6 @@ router.post('/login', (req, res, next) => {
 
 // Get by email
 router.get('/', authenticate, (req, res) => {
-    console.log('req: ', req.user)
     Users.getById(req.user)
         .then(user => {
             res.status(200).json(user)

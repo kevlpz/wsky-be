@@ -32,6 +32,6 @@ server.use(helmet())
 server.use(express.json())
 server.use('/products', productsRouter)
 server.use('/users', usersRouter)
-server.use('/carts', cartsRouter)
+server.use('/cart', cartsRouter)
 
 module.exports = server

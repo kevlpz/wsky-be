@@ -54,12 +54,13 @@ exports.up = function (knex) {
         .inTable('carts')
         .onDelete("CASCADE")
         .onUpdate("CASCADE")
-      tbl.integer('quantity').notNullable()
+      tbl.integer('quantity').notNullable().defaultTo(1)
     })
 };
 
 exports.down = function (knex) {
   return knex.schema
+    .dropTableIfExists('cartItems')
     .dropTableIfExists('carts')
     .dropTableIfExists('categories')
     .dropTableIfExists('users')

@@ -25,43 +25,28 @@ exports.up = function (knex) {
       tbl.string('email').notNullable().unique()
       tbl.string('password').notNullable()
     })
-    .createTable('carts', tbl => {
-      tbl.increments()
-      tbl
-        .integer('userID')
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('users')
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE")
-    })
     .createTable('cartItems', tbl => {
-      tbl.increments()
       tbl
         .integer('productID')
         .unsigned()
         .notNullable()
         .references('id')
         .inTable('whiskey')
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE")
       tbl
-        .integer('cartID')
+        .integer('userID')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('carts')
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE")
+        .inTable('users')
       tbl.integer('quantity').notNullable().defaultTo(1)
+      tbl.primary(['productID', 'userID'])
+      tbl.index(['productID', 'userID'])
     })
 };
 
 exports.down = function (knex) {
   return knex.schema
     .dropTableIfExists('cartItems')
-    .dropTableIfExists('carts')
     .dropTableIfExists('categories')
     .dropTableIfExists('users')
     .dropTableIfExists('whiskey')

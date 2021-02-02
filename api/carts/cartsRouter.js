@@ -5,12 +5,16 @@ const router = express.Router();
 
 // Add to cart
 router.post('/', (req, res) => {
+    const { productID } = req.body
     if(!req.user) {
         res.status(401).json({error: 'Must be logged in'})
     } else {
-        Carts.add(req.body)
+        Carts.add({
+            productID,
+            userID: req.user
+        })
         .then(item => {
-            console.log(item)
+            console.log('item: ', item)
             res.status(201).json(item)
         })
         .catch(err => {

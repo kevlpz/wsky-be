@@ -22,11 +22,9 @@ function add(item) {
 }
 
 function update(productID, userID, quantity) {
-    console.log('update', productID, userID, quantity)
     return db('cartItems')
         .where({ productID: productID, userID: userID })
         .update({ quantity: quantity })
-        // .then(id => getItemById(id))
 }
 
 function del(id) {

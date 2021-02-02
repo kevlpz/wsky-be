@@ -31,12 +31,11 @@ module.exports = function(passport) {
     passport.serializeUser((user, done) => {
         done(null, user.id)
     })
-    passport.deserializeUser((id, done) => {
-        Users.getById(id)
-            .then(user => done(null, user.id))
-            .catch(err => {
-                console.log('Error deserializing user', err)
-                done(err)
-            })
+    passport.deserializeUser(async (id, done) => {
+        try {
+            done(null, await Users.getById(id))
+        } catch(err) {
+            done(err);
+        }
     })
 }

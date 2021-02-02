@@ -59,8 +59,6 @@ router.delete('/:id', (req, res) => {
 router.put('/', (req, res) => {
     const { productID, quantity } = req.body
     const userID = req.user.id 
-    console.log('req.user: ', req.user)
-    console.log('userID: ', userID)
 
     if(!req.user) {
         res.status(404).json({error: 'Must be logged in'})

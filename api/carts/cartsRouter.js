@@ -41,11 +41,11 @@ router.get('/', (req, res) => {
 })
 
 // Remove from cart
-router.delete('/:id', (req, res) => {
+router.delete('/:productID', (req, res) => {
     if(!req.user) {
         res.status(404).json({error: 'Must be logged in'})
     } else {
-        Carts.del(req.params.id)
+        Carts.del(req.params.productID, req.user.id)
             .then(response => res.status(200).json(response))
             .catch(err => {
                 console.log(err)

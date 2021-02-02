@@ -27,9 +27,9 @@ function update(productID, userID, quantity) {
         .update({ quantity: quantity })
 }
 
-function del(id) {
+function del(productID, userID) {
     return db('cartItems')
-        .where({ id: id })
+        .where({ productID: productID, userID: userID })
         .del()
 }
 

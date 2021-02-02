@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
     } else {
         Carts.add({
             productID,
-            userID: req.user
+            userID: req.user.id
         })
         .then(item => {
             console.log('item: ', item)
@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
     if(!req.user) {
         res.status(401).json({error: 'Must be logged in'})
     } else {
-        Carts.getByUserId(req.user)
+        Carts.getByUserId(req.user.id)
             .then(cart => {
                 res.status(200).json(cart)
             })
@@ -42,7 +42,6 @@ router.get('/', (req, res) => {
 
 // Remove from cart
 router.delete('/:id', (req, res) => {
-    console.log('req,params: ', req.params)
     if(!req.user) {
         res.status(404).json({error: 'Must be logged in'})
     } else {
@@ -58,13 +57,15 @@ router.delete('/:id', (req, res) => {
 
 // Update item quantity
 router.put('/', (req, res) => {
-    const { id } = req.body
-    const { quantity } = req.body
+    const { productID, quantity } = req.body
+    const userID = req.user.id 
+    console.log('req.user: ', req.user)
+    console.log('userID: ', userID)
 
     if(!req.user) {
         res.status(404).json({error: 'Must be logged in'})
     } else {
-        Carts.update(id, quantity)
+        Carts.update(productID, userID, quantity)
             .then(item => res.status(201).json(item))
             .catch(err => {
                 console.log(err)

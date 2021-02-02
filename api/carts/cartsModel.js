@@ -16,17 +16,17 @@ function get(id) {
 
 function add(item) {
     return db('cartItems')
-        .where({ userID: item.userID })
-        .insert(item)
+        .insert({productID: item.productID, userID: item.userID})
         .onConflict(['productID', 'userID'])
         .merge({quantity: db.raw('`quantity` + 1')})
 }
 
-function update(id, quantity) {
+function update(productID, userID, quantity) {
+    console.log('update', productID, userID, quantity)
     return db('cartItems')
-        .where({ id: id })
+        .where({ productID: productID, userID: userID })
         .update({ quantity: quantity })
-        .then(id => getItemById(id))
+        // .then(id => getItemById(id))
 }
 
 function del(id) {
@@ -36,16 +36,8 @@ function del(id) {
 }
 
 function getByUserId(id) {
-    console.log('id: ', id)
     return db('cartItems')
         .join('whiskey', 'whiskey.id', 'cartItems.productID')
         .where({ userID: id })
-        .select('userID', 'whiskey.id as productID', 'quantity', 'name', 'price', 'img')
-}
-
-function getItemById(id) {
-    console.log('getbyid')
-    return db('cartItems')
-        .where({ id: id })
-        .first()
+        .select('whiskey.id as productID', 'quantity', 'name', 'price', 'img')
 }

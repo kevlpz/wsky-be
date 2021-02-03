@@ -10,7 +10,7 @@ const productsRouter = require('./products/productsRouter')
 const usersRouter = require ('./users/usersRouter')
 const cartsRouter = require('./carts/cartsRouter')
 
-server.enable('trust proxy')
+server.set('trust proxy', 1)
 server.use(cors({
     origin: 'https://wsky.vercel.app',
     credentials: true

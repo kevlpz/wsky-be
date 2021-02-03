@@ -11,7 +11,7 @@ const usersRouter = require ('./users/usersRouter')
 const cartsRouter = require('./carts/cartsRouter')
 
 server.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://wsky.vercel.app',
     credentials: true
 }))
 server.use(session({

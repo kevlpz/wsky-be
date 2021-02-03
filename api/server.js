@@ -34,6 +34,6 @@ server.use(express.json())
 server.use('/products', productsRouter)
 server.use('/users', usersRouter)
 server.use('/cart', cartsRouter)
-server.enable('trust proxy')
+server.set('trust proxy', 1)
 
 module.exports = server

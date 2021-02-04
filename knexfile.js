@@ -42,5 +42,5 @@ module.exports = {
       directory: './data/seeds'
     },
     useNullAsDefault: true
-
+  }
 };

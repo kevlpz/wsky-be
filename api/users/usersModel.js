@@ -27,6 +27,6 @@ function getByEmail(email) {
 
 function add(user) {
     return db('users')
-        .insert(user, 'id')
+        .insert(user, ['id'])
         .then(([id]) => getById(id))
 }

@@ -15,13 +15,18 @@ const authenticate = (req, res, next) => {
 // Register
 router.post('/register', async (req, res) => {
     const { email, password } = req.body
-    const hashedPassword = await bcrypt.hash(password, 10)
-    Users.add({ email, password: hashedPassword })
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10)
+        Users.add({ email, password: hashedPassword })
         .then(user => res.status(201).json({ ...user, password: undefined }))
         .catch(err => {
             console.log(err)
             res.status(500).json({ error: 'Could not create user' })
         })
+    }
+    catch {
+        res.status(500).json('could not create user')
+    }
 })
 
 // Login

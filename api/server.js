@@ -14,7 +14,7 @@ server.use(cors({
     origin: 'https://wsky.vercel.app',
     credentials: true
 }))
-app.set('trust proxy', 1)
+server.set('trust proxy', 1)
 server.use(session({
     name: 'dram',
     secret: process.env.SECRET,

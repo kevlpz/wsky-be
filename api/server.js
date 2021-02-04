@@ -23,7 +23,8 @@ server.use(session({
         sameSite: 'none',
         maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
         secure: true, // true for production
-        httpOnly: false
+        httpOnly: false,
+        domain: 'wsky.vercel.app'
     },
     resave: false,
     saveUninitialized: false // false for production

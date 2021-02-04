@@ -14,6 +14,7 @@ server.use(cors({
     origin: 'https://wsky.vercel.app',
     credentials: true
 }))
+app.set('trust proxy', 1)
 server.use(session({
     name: 'dram',
     secret: process.env.SECRET,
@@ -34,6 +35,5 @@ server.use(express.json())
 server.use('/products', productsRouter)
 server.use('/users', usersRouter)
 server.use('/cart', cartsRouter)
-server.enable('trust proxy')
 
 module.exports = server

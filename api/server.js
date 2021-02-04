@@ -20,6 +20,7 @@ server.use(session({
     secret: process.env.SECRET,
     proxy: true,
     cookie: {
+        sameSite: 'none',
         maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
         secure: true, // true for production
         httpOnly: false

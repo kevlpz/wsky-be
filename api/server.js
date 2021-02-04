@@ -20,7 +20,7 @@ server.use(session({
     proxy: true,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
-        secure: true, // true for production
+        secure: false, // true for production
         httpOnly: false
     },
     resave: false,

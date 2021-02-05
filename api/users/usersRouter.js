@@ -37,9 +37,9 @@ router.post('/login', (req, res, next) => {
     })(req, res, next)
 })
 
-// Get by email
+// Get by id
 router.get('/', authenticate, (req, res) => {
-    Users.getById(req.user)
+    Users.getById(req.user.id)
         .then(user => {
             res.status(200).json(user)
         })
@@ -50,19 +50,19 @@ router.get('/', authenticate, (req, res) => {
 })
 
 // Get user
-router.get('/:id', (req, res) => {
-    Users.getById(req.params.id)
-        .then(user => res.status(200).json(user))
-        .catch(err => {
-            console.log(err)
-            res.status(404).json({ error: 'Could not find user' })
-        })
-})
+// router.get('/:id', (req, res) => {
+//     Users.getById(req.params.id)
+//         .then(user => res.status(200).json(user))
+//         .catch(err => {
+//             console.log(err)
+//             res.status(404).json({ error: 'Could not find user' })
+//         })
+// })
 
-router.get('/logout', (req, res) => {
-    req.session.destroy(() => {
-        res.send('success')
-    })
+// Logout
+router.get('/logout', authenticate, (req, res) => {
+    req.logout()
+    res.status(200).json({message: 'Logged out'})
 })
 
 module.exports = router

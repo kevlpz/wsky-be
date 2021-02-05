@@ -11,7 +11,7 @@ const usersRouter = require ('./users/usersRouter')
 const cartsRouter = require('./carts/cartsRouter')
 
 server.use(cors({
-    origin: 'https://wsky.vercel.app',
+    origin: 'https://wsky-fe.herokuapp.com/',
     credentials: true
 }))
 // server.enable('trust proxy')
@@ -23,7 +23,7 @@ server.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
         secure: true, // true for production
         httpOnly: false,
-        domain: '.wsky.vercel.app'
+        // domain: '.wsky.vercel.app'
     },
     resave: false,
     saveUninitialized: false // false for production

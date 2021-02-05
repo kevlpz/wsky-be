@@ -11,7 +11,7 @@ const usersRouter = require ('./users/usersRouter')
 const cartsRouter = require('./carts/cartsRouter')
 
 server.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://infinite-refuge-27306.herokuapp.com',
     credentials: true
 }))
 // server.enable('trust proxy')

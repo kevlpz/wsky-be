@@ -4,6 +4,7 @@ const cors = require('cors')
 const helmet = require('helmet')
 require('dotenv').config()
 const session = require('express-session')
+const pgSession = require('connect-pg-simple')(session)
 const passport = require('passport')
 
 const productsRouter = require('./products/productsRouter')
@@ -16,6 +17,7 @@ server.use(cors({
 }))
 // server.enable('trust proxy')
 server.use(session({
+    store: new pgSession(),
     name: 'dram',
     secret: process.env.SECRET,
     // proxy: true,

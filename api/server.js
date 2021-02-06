@@ -27,7 +27,7 @@ server.use(session({
     proxy: true,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
-        secure: false, // true for production
+        secure: true, // true for production
         httpOnly: true,
         sameSite: 'none'
         // domain: '.wsky.vercel.app'

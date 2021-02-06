@@ -19,6 +19,7 @@ function add(item) {
         .insert({productID: item.productID, userID: item.userID})
         .onConflict(['productID', 'userID'])
         .merge({quantity: db.raw('"quantity" + 1')})
+        .where({productID: item.productID, userID: item.userID})
 }
 
 function update(productID, userID, quantity) {

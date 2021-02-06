@@ -16,10 +16,10 @@ function get(id) {
 
 function add(item) {
     return db('cartItems')
+        .where({productID: item.productID, userID: item.userID})
         .insert({productID: item.productID, userID: item.userID})
         .onConflict(['productID', 'userID'])
         .merge({quantity: db.raw('"quantity" + 1')})
-        .where({productID: item.productID, userID: item.userID})
 }
 
 function update(productID, userID, quantity) {

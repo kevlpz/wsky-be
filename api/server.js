@@ -24,7 +24,7 @@ server.use(session({
     }),
     name: 'dram',
     secret: process.env.SECRET,
-    // proxy: true,
+    proxy: true,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
         secure: false, // true for production

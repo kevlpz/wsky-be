@@ -5,7 +5,9 @@ const helmet = require('helmet')
 require('dotenv').config()
 const session = require('express-session')
 // const pgSession = require('connect-pg-simple')(session)
+const KnexSessionStore = require('connect-session-knex')(session)
 const passport = require('passport')
+const knex = require('../data/knexConfig')
 
 const productsRouter = require('./products/productsRouter')
 const usersRouter = require ('./users/usersRouter')
@@ -17,7 +19,9 @@ server.use(cors({
 }))
 // server.enable('trust proxy')
 server.use(session({
-    store: new (require('connect-pg-simple')(session))(),
+    store: new KnexSessionStore({
+        knex
+    }),
     name: 'dram',
     secret: process.env.SECRET,
     // proxy: true,

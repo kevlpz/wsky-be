@@ -28,7 +28,7 @@ server.use(session({
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
         secure: true, // true for production
-        httpOnly: true,
+        httpOnly: false,
         sameSite: 'none',
         domain: '.https://wsky-fe.herokuapp.com/'
         // domain: '.wsky.vercel.app'

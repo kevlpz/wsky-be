@@ -18,7 +18,7 @@ function add(item) {
     return db('cartItems')
         .insert({productID: item.productID, userID: item.userID})
         .onConflict(['productID', 'userID'])
-        .merge({quantity: db.raw('`quantity` + 1')})
+        .merge({quantity: db.raw('"quantity" + 1')})
 }
 
 function update(productID, userID, quantity) {

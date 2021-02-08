@@ -29,7 +29,7 @@ server.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
         secure: true, // true for production
         httpOnly: false,
-        sameSite: 'none',
+        sameSite: 'strict',
         domain: '.wsky-fe.herokuapp.com/'
         // domain: '.wsky.vercel.app'
     },

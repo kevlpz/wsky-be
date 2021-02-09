@@ -30,7 +30,7 @@ server.use(session({
         secure: true, // true for production
         httpOnly: false,
         sameSite: 'none',
-        domain: '.wsky-fe.herokuapp.com/'
+        // domain: '.wsky-fe.herokuapp.com/'
         // domain: '.wsky.vercel.app'
     },
     resave: false,

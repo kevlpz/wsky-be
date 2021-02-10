@@ -28,5 +28,8 @@ function getByEmail(email) {
 function add(user) {
     return db('users')
         .insert(user, ['id'])
-        .then(([id]) => getById(id))
+        .then(([id]) => {
+            console.log('id: ', id)
+            return getById(id)
+        })
 }

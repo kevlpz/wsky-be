@@ -4,7 +4,6 @@ const cors = require('cors')
 const helmet = require('helmet')
 require('dotenv').config()
 const session = require('express-session')
-// const pgSession = require('connect-pg-simple')(session)
 const KnexSessionStore = require('connect-session-knex')(session)
 const passport = require('passport')
 const knex = require('../data/knexConfig')
@@ -29,9 +28,7 @@ server.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
         secure: true, // true for production
         httpOnly: false,
-        sameSite: 'none',
-        // domain: '.wsky-fe.herokuapp.com/'
-        // domain: '.wsky.vercel.app'
+        sameSite: 'none'
     },
     resave: false,
     saveUninitialized: false // false for production

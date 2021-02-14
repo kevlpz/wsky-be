@@ -37,7 +37,7 @@ router.post('/login', (req, res, next) => {
     })(req, res, next)
 })
 
-// Get by id
+// Get user
 router.get('/', authenticate, (req, res) => {
     Users.getById(req.user.id)
         .then(user => {
@@ -48,16 +48,6 @@ router.get('/', authenticate, (req, res) => {
             res.status(500).json({ error: 'Could not get users' })
         })
 })
-
-// Get user
-// router.get('/:id', (req, res) => {
-//     Users.getById(req.params.id)
-//         .then(user => res.status(200).json(user))
-//         .catch(err => {
-//             console.log(err)
-//             res.status(404).json({ error: 'Could not find user' })
-//         })
-// })
 
 // Logout
 router.get('/logout', authenticate, (req, res) => {

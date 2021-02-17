@@ -5,7 +5,7 @@ const LocalStrategy = require('passport-local').Strategy
 module.exports = function(passport) {
     passport.use(
         new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
-            Users.getByEmail(email)
+            Users.getByEmail(email.toLowerCase())
                 .then(user => {
                     if(!user) {
                         return done(null, false)
